@@ -309,6 +309,13 @@ img {
   gap: 0.75rem;
 }
 
+.team-socials {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
 .team-socials a {
   width: 40px;
   height: 40px;
@@ -318,7 +325,6 @@ img {
   text-decoration: none;
   background: rgba(212, 171, 120, 0.16);
   color: var(--accent-strong);
-  font-weight: 700;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
