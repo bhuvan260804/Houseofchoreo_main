@@ -263,9 +263,14 @@ img {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem;
   margin-top: 2rem;
+  align-items: start;
 }
 
 .team-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 320px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border);
   border-radius: 28px;
@@ -301,12 +306,6 @@ img {
   color: var(--muted);
   line-height: 1.75;
   margin: 0 0 1rem;
-}
-
-.team-socials {
-  display: flex;
-  justify-content: center;
-  gap: 0.75rem;
 }
 
 .team-socials {
