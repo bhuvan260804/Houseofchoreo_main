@@ -19,12 +19,16 @@
           <h1>Choreo at Your Doorstep</h1>
         </div>
       </div>
-      <nav class="nav-links">
+      <nav id="main-nav" class="nav-links">
         <a href="#about">About</a>
         <a href="#services">Services</a>
         <a href="#gallery">Gallery</a>
         <a href="#contact">Contact</a>
       </nav>
+      <button class="mobile-menu-toggle" aria-expanded="false" aria-controls="main-nav">
+        <span class="sr-only">Menu</span>
+        <span class="hamburger" aria-hidden="true"></span>
+      </button>
     </div>
   </header>
 
@@ -40,6 +44,13 @@
         </div>
       </div>
       <div class="hero-visual"></div>
+        <div class="hero-bubbles" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
     </section>
 
     <section id="about" class="section about-section">
@@ -142,5 +153,6 @@
       <p>Choreo at Your Doorstep</p>
     </div>
   </footer>
+  <script src="script.js" defer></script>
 </body>
 </html>
