@@ -1,0 +1,354 @@
+:root {
+  --bg: #0f0b0a;
+  --panel: #161111;
+  --text: #f5eedc;
+  --muted: #d8c5b3;
+  --accent: #d4ab78;
+  --accent-strong: #f5c78a;
+  --border: rgba(212, 171, 120, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: radial-gradient(circle at top left, rgba(212, 171, 120, 0.14), transparent 30%), linear-gradient(180deg, #121010 0%, #0f0b0a 100%);
+  font-family: 'Montserrat', sans-serif;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.container {
+  width: min(1100px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.site-header,
+.site-footer {
+  padding: 1.5rem 0;
+}
+
+.header-inner,
+.footer-inner,
+.section-grid,
+.contact-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(14px);
+  background: rgba(15, 11, 10, 0.82);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-mark {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #d4ab78, #f5c78a);
+  font-weight: 700;
+  color: #111;
+  font-size: 1.1rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 0.78rem;
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+}
+
+.site-header h1,
+.site-footer p,
+.section-header h3,
+.hero h2,
+.about-section h3,
+.services-section h3,
+.contact-section h3 {
+  margin: 0;
+}
+
+.site-header h1 {
+  font-size: 1.2rem;
+  letter-spacing: 0.15em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.hero {
+  padding: 4rem 0 5rem;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.hero-copy h2 {
+  font-size: clamp(2.6rem, 4vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.hero-copy p {
+  max-width: 610px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.95rem 1.8rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #d4ab78, #f5c78a);
+  color: #111;
+}
+
+.btn-secondary {
+  background: transparent;
+  border-color: rgba(212, 171, 120, 0.35);
+  color: var(--text);
+}
+
+.hero-visual {
+  min-height: 420px;
+  border-radius: 32px;
+  background: radial-gradient(circle at top, rgba(212, 171, 120, 0.16), transparent 28%),
+              linear-gradient(180deg, #221a18 0%, #110b0a 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 20% 25%, rgba(245, 199, 138, 0.16), transparent 25%),
+                    radial-gradient(circle at 80% 70%, rgba(212, 171, 120, 0.12), transparent 20%);
+}
+
+.hero-visual::after {
+  content: 'House of Choreo';
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  color: rgba(245, 238, 220, 0.15);
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.section {
+  padding: 5rem 0;
+}
+
+.section-header {
+  margin-bottom: 2rem;
+}
+
+.section-header h3,
+.about-section h3,
+.services-section h3,
+.contact-section h3 {
+  font-size: 2.4rem;
+}
+
+.about-section .section-grid,
+.contact-section .contact-grid {
+  gap: 3rem;
+}
+
+.about-cards {
+  display: grid;
+  gap: 1rem;
+}
+
+.card,
+.service-card,
+.gallery-card,
+.contact-form {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 1.75rem;
+}
+
+.card h4,
+.service-card h4 {
+  margin: 0 0 0.75rem;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.service-card p {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.gallery-card {
+  min-height: 210px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
+}
+
+.contact-grid {
+  align-items: stretch;
+}
+
+.contact-details {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1.5rem;
+  color: var(--muted);
+}
+
+.contact-form {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.contact-form label {
+  display: grid;
+  gap: 0.5rem;
+  color: var(--text);
+}
+
+.contact-form input,
+.contact-form textarea {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  border-radius: 18px;
+  padding: 1rem 1rem;
+  font: inherit;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: rgba(213, 181, 135, 0.7);
+}
+
+.site-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.footer-inner {
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 900px) {
+  .header-inner,
+  .section-grid,
+  .contact-grid {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-visual {
+    min-height: 320px;
+  }
+
+  .service-grid,
+  .gallery-grid,
+  .about-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-header,
+  .site-footer,
+  .hero,
+  .section,
+  .contact-form {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .hero-copy h2 {
+    font-size: 2.4rem;
+  }
+
+  .logo-mark {
+    width: 48px;
+    height: 48px;
+    font-size: 1rem;
+  }
+}
