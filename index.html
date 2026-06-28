@@ -10,6 +10,32 @@
   <link rel="stylesheet" href="styles.css?v=20260627">
 </head>
 <body>
+  <!-- ============================================================
+       NEW: PREMIUM LOADER
+       Elegant loading screen shown while the page boots up.
+       Fades out automatically once everything is ready (see script.js).
+  ============================================================ -->
+  <div id="page-loader" class="page-loader" aria-hidden="true">
+    <div class="loader-inner">
+      <img src="logo.png" alt="" class="loader-logo" />
+      <div class="loader-line"><span></span></div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       NEW: SCROLL PROGRESS INDICATOR
+       Thin bar fixed to the very top of the viewport that fills
+       as the user scrolls down the page.
+  ============================================================ -->
+  <div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       NEW: CUSTOM CURSOR (desktop only, see script.js for the
+       pointer:fine check that disables this on touch devices)
+  ============================================================ -->
+  <div id="cursor-dot" class="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" class="cursor-ring" aria-hidden="true"></div>
+
   <header class="site-header">
     <div class="container header-inner">
       <div class="brand">
@@ -35,16 +61,46 @@
 
   <main>
     <section class="hero">
+      <!-- NEW: data-hero-fade + inline --d delay vars drive the sequential
+           "fade up" entrance animation defined in styles.css/script.js -->
       <div class="hero-copy container">
-        <p class="eyebrow">WEDDINGS • SANGEETS • BIRTHDAYS • CORPORATE EVENTS</p>
-        <h2 style="font-size: 30px">Custom choreography for every celebration</h2>
-        <p>We bring the moves, you live the moment. House of Choreo delivers polished dance experiences for your most special occasions.</p>
-        <div class="hero-actions">
+        <p class="eyebrow" data-hero-fade style="--d:0ms">WEDDINGS • SANGEETS • BIRTHDAYS • CORPORATE EVENTS</p>
+        <h2 style="font-size: 30px; --d:120ms" data-hero-fade>Custom choreography for every celebration</h2>
+        <p data-hero-fade style="--d:240ms">We bring the moves, you live the moment. House of Choreo delivers polished dance experiences for your most special occasions.</p>
+        <div class="hero-actions" data-hero-fade style="--d:360ms">
           <a class="btn btn-primary" href="#contact">Book Your Choreo</a>
           <a class="btn btn-secondary" href="#services">View Services</a>
         </div>
       </div>
-      <div class="hero-visual">
+      <div class="hero-visual" data-hero-fade style="--d:200ms">
+        <!-- NEW: floating ambient particles, purely decorative, very low opacity -->
+        <div class="hero-particles" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </div>
+
+        <!-- NEW: low-opacity dancing silhouette built with simple shapes,
+             animated via CSS keyframes (see .dancer-silhouette in styles.css).
+             Kept extremely light (one inline SVG, no images/video) for performance. -->
+        <svg class="dancer-silhouette" aria-hidden="true" viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg">
+          <g class="dancer-body">
+            <circle cx="100" cy="40" r="22" />
+            <rect x="86" y="60" width="28" height="80" rx="14" />
+            <g class="dancer-arm-left">
+              <rect x="60" y="65" width="14" height="70" rx="7" />
+            </g>
+            <g class="dancer-arm-right">
+              <rect x="126" y="65" width="14" height="70" rx="7" />
+            </g>
+            <g class="dancer-leg-left">
+              <rect x="80" y="135" width="16" height="90" rx="8" />
+            </g>
+            <g class="dancer-leg-right">
+              <rect x="104" y="135" width="16" height="90" rx="8" />
+            </g>
+          </g>
+        </svg>
+
         <div class="hero-bubbles" aria-hidden="true">
           <span></span>
           <span></span>
@@ -59,19 +115,21 @@
       <div class="container section-grid">
         <div>
           <p class="eyebrow">About Us</p>
-          <h3>House of Choreo is your creative dance partner</h3>
+          <!-- NEW: data-animate="slide-left" -> heading slides in from the left on scroll -->
+          <h3 data-animate="slide-left">House of Choreo is your creative dance partner</h3>
           <p>Led by Anshika Jain, our team crafts tailor-made choreography for birthdays, weddings, sangeets and curated events. We combine elegance, energy and storytelling to make every dance performance unforgettable.</p>
         </div>
         <div class="about-cards">
-          <div class="card">
+          <!-- NEW: data-animate="fade-up" with staggered delays for cards -->
+          <div class="card" data-animate="fade-up" style="--delay:0ms">
             <h4>Personalized choreography</h4>
             <p>Custom routines built around your song, theme, and dance level.</p>
           </div>
-          <div class="card">
+          <div class="card" data-animate="fade-up" style="--delay:100ms">
             <h4>Any event, any stage</h4>
             <p>From intimate rehearsals to grand celebrations, we arrive ready to elevate the moment.</p>
           </div>
-          <div class="card">
+          <div class="card" data-animate="fade-up" style="--delay:200ms">
             <h4>Professional coaching</h4>
             <p>Clear guidance, tailored pacing, and confidence-boosting training.</p>
           </div>
@@ -82,21 +140,21 @@
     <section id="services" class="section services-section">
       <div class="container">
         <p class="eyebrow">Our Services</p>
-        <h3>Dance solutions designed for every celebration</h3>
+        <h3 data-animate="slide-left">Dance solutions designed for every celebration</h3>
         <div class="service-grid">
-          <article class="service-card">
+          <article class="service-card" data-animate="fade-up" style="--delay:0ms">
             <h4>Wedding Choreography</h4>
             <p>Beautiful partner pieces, couple routines, and ceremony performances.</p>
           </article>
-          <article class="service-card">
+          <article class="service-card" data-animate="fade-up" style="--delay:100ms">
             <h4>Sangeet Performances</h4>
             <p>High-energy group numbers and thematic dance sequences.</p>
           </article>
-          <article class="service-card">
+          <article class="service-card" data-animate="fade-up" style="--delay:200ms">
             <h4>Birthday Moments</h4>
             <p>Personalized openings, surprise acts, and fun family routines.</p>
           </article>
-          <article class="service-card">
+          <article class="service-card" data-animate="fade-up" style="--delay:300ms">
             <h4>Event Entertainment</h4>
             <p>Corporate, product launches, and showcase performances with style.</p>
           </article>
@@ -108,12 +166,14 @@
       <div class="container">
         <div class="section-header">
           <p class="eyebrow">Showcase</p>
-          <h3>Moments we've choreographed</h3>
+          <h3 data-animate="slide-left">Moments we've choreographed</h3>
         </div>
+        <!-- NEW: gallery-card now carries a hover zoom + soft glow border (styles.css)
+             and a staggered reveal as it scrolls into view -->
         <div class="gallery-grid">
-          <div class="gallery-card">Wedding Glow</div>
-          <div class="gallery-card">Sangeet Spark</div>
-          <div class="gallery-card">Birthday Beats</div>
+          <div class="gallery-card" data-animate="fade-up" style="--delay:0ms">Wedding Glow</div>
+          <div class="gallery-card" data-animate="fade-up" style="--delay:120ms">Sangeet Spark</div>
+          <div class="gallery-card" data-animate="fade-up" style="--delay:240ms">Birthday Beats</div>
         </div>
       </div>
     </section>
@@ -122,12 +182,16 @@
       <div class="container">
         <div class="section-header">
           <p class="eyebrow">Meet the team</p>
-          <h3>Two creative minds behind the magic</h3>
+          <h3 data-animate="slide-left">Two creative minds behind the magic</h3>
         </div>
+        <!-- NEW: team-card gets a lift + golden glow on hover, the
+             team-photo gets a subtle zoom, and socials animate upward
+             (all defined in styles.css). Reveal is staggered on scroll. -->
         <div class="team-grid">
-          <article class="team-card">
-            <div class="team-photo">AJ
-              <!--<img class="AJ_Img" src="" alt="AJ" />-->
+          <article class="team-card" data-animate="fade-up" style="--delay:0ms">
+            <div class="team-photo">
+            <!-- 👉 PASTE ANSHIKA'S IMAGE LINK INSIDE THE QUOTES BELOW 👈 -->
+            <img class="AJ_Img" src="aj_ai.png" alt="Anshika Jain" />
             </div>
             <h4>Anshika Jain</h4>
             <p class="team-role">Founder & Chief Creativity Officer</p>
@@ -151,8 +215,11 @@
               </a>
             </div>
           </article>
-          <article class="team-card">
-            <div class="team-photo">BS</div>
+          <article class="team-card" data-animate="fade-up" style="--delay:150ms">
+            <div class="team-photo">
+            <!-- 👉 PASTE BHUVAN'S IMAGE LINK INSIDE THE QUOTES BELOW 👈 -->
+            <img class="BS_Img" src="Bs.png" alt="Bhuvan Singh" />
+            </div>
             <h4>Bhuvan</h4>
             <p class="team-role">Co-Founder & Chief Buisness Officer</p>
             <p>Brings energy, stage presence, and sharp timing to every performance with a playful, modern style.</p>
@@ -183,7 +250,7 @@
       <div class="container section-grid contact-grid">
         <div>
           <p class="eyebrow">Get in touch</p>
-          <h3>Ready to create a choreography experience?</h3>
+          <h3 data-animate="slide-left">Ready to create a choreography experience?</h3>
           <p>Share your event details and we'll respond with a proposal that fits your vision and energy.</p>
           <div class="contact-details">
             <div><strong>Phone:</strong> +91 88001 29772</div>
@@ -191,18 +258,22 @@
             <div><strong>Instagram:</strong> @is_anshikaajain</div>
           </div>
         </div>
-        <form class="contact-form">
+        <form class="contact-form" id="contact-form">
           <label>
             Your Name
-            <input type="text" placeholder="Enter your name" required>
+            <input type="text" name="name" placeholder="Enter your name" required>
           </label>
           <label>
             Event Type
-            <input type="text" placeholder="Wedding, birthday, sangeet" required>
+            <input type="text" name="event_type" placeholder="Wedding, birthday, sangeet" required>
+          </label>
+          <label>
+            Phone Number
+            <input type="tel" name="phone" placeholder="Enter your phone number" required>
           </label>
           <label>
             Message
-            <textarea rows="5" placeholder="Tell us about your vision" required></textarea>
+            <textarea name="message" rows="5" placeholder="Tell us about your vision" required></textarea>
           </label>
           <button type="submit" class="btn btn-primary">Send Message</button>
         </form>

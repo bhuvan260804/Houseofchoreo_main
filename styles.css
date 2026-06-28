@@ -293,6 +293,14 @@ img {
   letter-spacing: 0.08em;
 }
 
+/* NEW: makes any pasted image fill the circular frame neatly */
+.team-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 .team-card h4 {
   margin: 0 0 0.35rem;
 }
@@ -527,4 +535,347 @@ img {
   50% { transform: translate3d(calc(var(--mx) * -6px), calc(var(--my) * -6px), 0) translateY(-18px); }
   100% { transform: translate3d(calc(var(--mx) * 6px), calc(var(--my) * 6px), 0) translateY(0); }
 }
+
+/* =====================================================================
+   NEW: PREMIUM ENHANCEMENT LAYER
+   Everything below this point is additive. No existing selector above
+   has been removed or restyled — colors, fonts and layout are untouched.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. LOADER
+--------------------------------------------------------------------- */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  transition: opacity 600ms ease, visibility 600ms ease;
+}
+.page-loader.loaded {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+.loader-logo {
+  width: 86px;
+  height: 86px;
+  object-fit: cover;
+  animation: loader-pulse 1.8s ease-in-out infinite;
+}
+@keyframes loader-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+.loader-line {
+  width: 140px;
+  height: 2px;
+  background: rgba(212, 171, 120, 0.18);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.loader-line span {
+  display: block;
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  animation: loader-sweep 1.4s ease-in-out infinite;
+}
+@keyframes loader-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+
+/* ---------------------------------------------------------------------
+   2. SCROLL PROGRESS BAR
+--------------------------------------------------------------------- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%; /* updated live in script.js */
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  z-index: 60;
+  transition: width 80ms linear;
+}
+
+/* ---------------------------------------------------------------------
+   3. CUSTOM CURSOR (desktop / fine-pointer only — toggled via body class
+      "has-custom-cursor" added in script.js)
+--------------------------------------------------------------------- */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-strong);
+  box-shadow: 0 0 8px 2px rgba(245, 199, 138, 0.65);
+  transform: translate(-50%, -50%);
+}
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(212, 171, 120, 0.55);
+  transform: translate(-50%, -50%);
+  transition: opacity 200ms ease, width 220ms ease, height 220ms ease, border-color 220ms ease, background-color 220ms ease;
+}
+body.has-custom-cursor .cursor-dot,
+body.has-custom-cursor .cursor-ring {
+  opacity: 1;
+}
+body.has-custom-cursor {
+  cursor: none;
+}
+body.has-custom-cursor a,
+body.has-custom-cursor button {
+  cursor: none;
+}
+.cursor-ring.is-active {
+  width: 54px;
+  height: 54px;
+  background: rgba(212, 171, 120, 0.1);
+  border-color: var(--accent-strong);
+}
+
+/* ---------------------------------------------------------------------
+   4. HERO ENTRANCE: sequential fade-up for hero content
+--------------------------------------------------------------------- */
+[data-hero-fade] {
+  opacity: 0;
+  transform: translateY(22px);
+  animation: hero-fade-up 900ms cubic-bezier(.2,.9,.2,1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes hero-fade-up {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ambient glowing particles in the hero visual — lightweight, pure CSS */
+.hero-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.hero-particles span {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-strong);
+  opacity: 0.35;
+  box-shadow: 0 0 6px 1px rgba(245, 199, 138, 0.5);
+  animation: particle-drift 14s linear infinite;
+}
+.hero-particles span:nth-child(1) { left: 8%;  top: 80%; animation-duration: 16s; animation-delay: 0s; }
+.hero-particles span:nth-child(2) { left: 22%; top: 90%; animation-duration: 13s; animation-delay: 2s; }
+.hero-particles span:nth-child(3) { left: 38%; top: 75%; animation-duration: 18s; animation-delay: 1s; }
+.hero-particles span:nth-child(4) { left: 54%; top: 95%; animation-duration: 15s; animation-delay: 3s; }
+.hero-particles span:nth-child(5) { left: 68%; top: 85%; animation-duration: 17s; animation-delay: 0.5s; }
+.hero-particles span:nth-child(6) { left: 78%; top: 92%; animation-duration: 12s; animation-delay: 4s; }
+.hero-particles span:nth-child(7) { left: 88%; top: 78%; animation-duration: 19s; animation-delay: 2.5s; }
+.hero-particles span:nth-child(8) { left: 14%; top: 65%; animation-duration: 14s; animation-delay: 1.5s; }
+@keyframes particle-drift {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  10%  { opacity: 0.45; }
+  50%  { transform: translateY(-160px) translateX(12px); }
+  90%  { opacity: 0.25; }
+  100% { transform: translateY(-320px) translateX(-6px); opacity: 0; }
+}
+
+/* Dancing silhouette: elegant, very low opacity, slow CSS-keyframe motion.
+   Pure CSS transforms on a tiny inline SVG => negligible performance cost. */
+.dancer-silhouette {
+  position: absolute;
+  right: 4%;
+  bottom: 0;
+  height: 86%;
+  max-height: 360px;
+  opacity: 0.07; /* kept within the requested 5-10% range */
+  fill: var(--accent-strong);
+  pointer-events: none;
+}
+.dancer-body { transform-origin: 100px 160px; animation: dancer-sway 7s ease-in-out infinite; }
+.dancer-arm-left { transform-origin: 67px 65px; animation: arm-left-swing 3.4s ease-in-out infinite; }
+.dancer-arm-right { transform-origin: 133px 65px; animation: arm-right-swing 3.4s ease-in-out infinite; }
+.dancer-leg-left { transform-origin: 88px 137px; animation: leg-left-step 3.4s ease-in-out infinite; }
+.dancer-leg-right { transform-origin: 112px 137px; animation: leg-right-step 3.4s ease-in-out infinite; }
+
+@keyframes dancer-sway {
+  0%, 100% { transform: rotate(-3deg) translateY(0); }
+  50% { transform: rotate(3deg) translateY(-6px); }
+}
+@keyframes arm-left-swing {
+  0%, 100% { transform: rotate(-18deg); }
+  50% { transform: rotate(22deg); }
+}
+@keyframes arm-right-swing {
+  0%, 100% { transform: rotate(18deg); }
+  50% { transform: rotate(-22deg); }
+}
+@keyframes leg-left-step {
+  0%, 100% { transform: rotate(8deg); }
+  50% { transform: rotate(-10deg); }
+}
+@keyframes leg-right-step {
+  0%, 100% { transform: rotate(-8deg); }
+  50% { transform: rotate(10deg); }
+}
+
+/* Subtle hero parallax — background visual drifts slower than scroll */
+.hero-visual { will-change: transform; }
+
+/* ---------------------------------------------------------------------
+   5. SCROLL-IN ANIMATIONS (data-animate, driven by IntersectionObserver
+      in script.js — applies the .in-view class once per element)
+--------------------------------------------------------------------- */
+[data-animate] {
+  opacity: 0;
+  transition: opacity 700ms cubic-bezier(.2,.9,.2,1), transform 700ms cubic-bezier(.2,.9,.2,1);
+  transition-delay: var(--delay, 0ms);
+}
+[data-animate="fade-up"] { transform: translateY(28px); }
+[data-animate="slide-left"] { transform: translateX(-36px); }
+[data-animate="zoom-in"] { transform: scale(0.92); }
+[data-animate="pop"] { transform: scale(0.85); }
+[data-animate].in-view {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------------------------------------------------------------------
+   6. NAVBAR GLASSMORPHISM
+      Builds on the existing .site-header / .scrolled rules — does not
+      replace them, only layers a frosted-glass look + smoother transition.
+--------------------------------------------------------------------- */
+.site-header {
+  transition: background-color 420ms ease, box-shadow 420ms ease, padding 420ms ease, backdrop-filter 420ms ease;
+  background: rgba(15, 11, 10, 0.35); /* more transparent at the very top */
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+}
+.site-header.scrolled {
+  background: rgba(15, 11, 10, 0.82);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+
+/* ---------------------------------------------------------------------
+   7. BUTTON MICRO-INTERACTIONS: ripple + elegant hover
+--------------------------------------------------------------------- */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 24px rgba(212, 171, 120, 0.22);
+}
+.btn .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  transform: scale(0);
+  opacity: 0.6;
+  pointer-events: none;
+  animation: ripple-expand 600ms ease-out forwards;
+}
+@keyframes ripple-expand {
+  to { transform: scale(2.6); opacity: 0; }
+}
+
+/* ---------------------------------------------------------------------
+   8. TEAM CARD HOVER: lift, golden glow, photo zoom, socials rise
+--------------------------------------------------------------------- */
+.team-card {
+  transition: transform 380ms cubic-bezier(.2,.9,.2,1), box-shadow 380ms ease, border-color 380ms ease;
+}
+.team-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(245, 199, 138, 0.55);
+  box-shadow: 0 18px 42px rgba(212, 171, 120, 0.18), 0 0 28px rgba(245, 199, 138, 0.12);
+}
+.team-photo {
+  overflow: hidden;
+  transition: transform 380ms ease;
+}
+.team-card:hover .team-photo {
+  transform: scale(1.06);
+}
+.team-socials a {
+  transition: transform 220ms ease, background-color 220ms ease;
+}
+.team-card:hover .team-socials a {
+  transform: translateY(-3px);
+}
+
+/* ---------------------------------------------------------------------
+   9. GALLERY: staggered reveal handled by [data-animate], plus hover
+      zoom + soft glow border
+--------------------------------------------------------------------- */
+.gallery-card {
+  transition: transform 380ms cubic-bezier(.2,.9,.2,1), box-shadow 380ms ease, border-color 380ms ease;
+}
+.gallery-card:hover {
+  transform: scale(1.03);
+  border-color: rgba(245, 199, 138, 0.5);
+  box-shadow: 0 0 0 1px rgba(245, 199, 138, 0.25), 0 18px 36px rgba(0,0,0,0.35);
+}
+
+/* ---------------------------------------------------------------------
+   10. STATISTICS COUNTER (utility — activates automatically on any
+       element with [data-count-to], in case a stats block is added later)
+--------------------------------------------------------------------- */
+[data-count-to] { font-feature-settings: "tnum"; }
+
+/* ---------------------------------------------------------------------
+   11. ACCESSIBILITY: respect reduced-motion preference
+--------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-hero-fade],
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .dancer-silhouette,
+  .hero-particles span {
+    animation: none !important;
+    opacity: 0.05;
+  }
+  body.has-custom-cursor {
+    cursor: auto;
+  }
+  .cursor-dot, .cursor-ring { display: none; }
+}
+
+/* Hide the custom cursor + particle/silhouette flourishes on touch
+   devices automatically (no fine pointer => skip decorative motion) */
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot, .cursor-ring { display: none; }
+  .dancer-silhouette { opacity: 0.05; }
+}
+
 
