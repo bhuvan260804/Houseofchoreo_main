@@ -47,6 +47,19 @@ img {
   justify-content: space-between;
   gap: 2rem;
 }
+/* NEW: visually hides text for screen readers only (was missing — this
+   is why "Menu" was showing as literal text instead of an icon) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 .site-header {
   position: sticky;
@@ -395,6 +408,23 @@ img {
     flex-direction: column;
     align-items: flex-start;
   }
+  /* NEW: make stacked flex children fill the full width on mobile —
+   fixes the large blank space beside the contact form / about text */
+@media (max-width: 900px) {
+  .section-grid > *,
+  .contact-grid > * {
+    width: 100%;
+  }
+
+  .contact-form {
+    width: 100%;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+  }
+}
 
   .hero {
     grid-template-columns: 1fr;
@@ -424,6 +454,27 @@ img {
   .contact-form {
     padding-left: 1rem;
     padding-right: 1rem;
+  /* NEW: mobile usability fixes */
+
+  /* Prevent iOS Safari from auto-zooming when a form field is tapped */
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 16px;
+  }
+
+  /* Bigger, easier-to-tap buttons and nav links on small screens */
+  .btn { width: 100%; padding: 1rem 1.5rem; }
+  .hero-actions { flex-direction: column; }
+  .nav-links a { padding: 0.75rem 0.75rem; font-size: 1rem; }
+  .team-socials a { width: 44px; height: 44px; } /* easier tap target */
+
+  /* Shrink the dancer silhouette + particle field so they don't add
+     visual noise on small screens, and reduce particle count's reach */
+  .dancer-silhouette { opacity: 0.05; height: 70%; }
+  .hero-particles span { animation-duration: 10s !important; }
+
+  /* Avoid odd 100vh issues on mobile browsers with collapsing toolbars */
+  .hero { min-height: auto; }
   }
 
   .hero-copy h2 {
@@ -434,6 +485,41 @@ img {
     width: 48px;
     height: 48px;
     font-size: 1rem;
+  }
+  /* NEW: header/logo/nav fixes for small screens */
+  .header-inner {
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .brand {
+    margin-left: 0;       /* cancel the desktop -2rem offset */
+    gap: 0.5rem;
+    min-width: 0;          /* allows text to shrink/wrap instead of overflowing */
+  }
+
+  .logo-image {
+    width: 56px;
+    height: 56px;
+    margin-left: 0;        /* cancel the desktop -4rem offset */
+    margin-top: 0;
+  }
+
+  .brand h1 {
+    font-size: 1.05rem !important;
+    line-height: 1.2;
+  }
+
+  .brand .eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    margin-bottom: 0;
+  }
+
+  .mobile-menu-toggle {
+    flex-shrink: 0;
   }
 }
 
@@ -496,9 +582,9 @@ img {
 }
 .mobile-menu-toggle .hamburger {
   display: block;
-  width: 22px;
-  height: 2px;
-  background: var(--muted);
+  width: 24px;
+  height: 2.5px;          /* NEW: slightly thicker for visibility */
+  background: var(--accent-strong); /* NEW: gold instead of muted beige */
   position: relative;
 }
 .mobile-menu-toggle .hamburger::before,
@@ -514,10 +600,22 @@ img {
 .mobile-menu-toggle .hamburger::after { bottom: -7px; }
 
 @media (max-width: 900px) {
-  .mobile-menu-toggle { display: inline-flex; }
+  .mobile-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;   /* NEW: pins it to the right, beside the logo */
+    flex-shrink: 0;
+  }
   .nav-links { display: none; position: absolute; right: 1rem; top: 72px; background: rgba(17,11,10,0.95); padding: 1rem; border-radius: 12px; flex-direction: column; gap: 0.5rem; min-width: 160px; box-shadow: 0 8px 30px rgba(2,2,2,0.45); }
   .nav-links.open { display: flex; }
   .nav-links a { padding: 0.5rem 0.75rem; display: block; }
+  .nav-links {
+    max-width: calc(100% - 2rem); /* NEW: never overflow the viewport edge */
+  }
+  .nav-links a {
+    font-size: 0.95rem; /* NEW: matches tap-target sizing tweak from earlier */
+  }
 }
 
 /* Hero bubbles animation */
@@ -877,5 +975,16 @@ body.has-custom-cursor button {
   .cursor-dot, .cursor-ring { display: none; }
   .dancer-silhouette { opacity: 0.05; }
 }
+/* NEW: removes the 300ms tap-delay and grey tap-flash on touch devices */
+a, button, .btn {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
 
+/* NEW: respect device safe areas (notches) so the sticky header
+   never gets covered by a phone's status bar/notch */
+.site-header {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
 

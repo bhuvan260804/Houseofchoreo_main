@@ -223,8 +223,8 @@ if (form) {
   // than the page scroll for a subtle depth effect (no scroll lag: this
   // is throttled with requestAnimationFrame).
   // ---------------------------------------------------------------------
-  if (heroVisual && !prefersReducedMotion) {
-    let parallaxTicking = false;
+if (heroVisual && !prefersReducedMotion && window.innerWidth > 768) {
+  let parallaxTicking = false;
     function applyParallax() {
       const scrolled = window.scrollY;
       // Move at ~12% of scroll speed, capped so it never drifts too far
